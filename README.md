@@ -1,34 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## version 12 / version 13 큰 차이점
 
-## Getting Started
+### 12 version: 페이지 단위로 렌더링 방식을 규정
 
-First, run the development server:
+### 13 version: react18 버전부터 Server Components을 규정 - 컴포넌트 단위로 렌더링 방식을 규정 할 수 있음 (app 폴더에 모든 컴포넌트는 기본적으로 서버 컴포넌트)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+<br />
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Server-Components인지 Client-Components 확인 할 수 있는 방법 (보류)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Server Components
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- console.log을 찍어보게 되면 브라우저(개발자도구)에서 console.log가 찍히지 않는다.
+- vscode 내에 있는 terminal에서 찍힌다.
+  </br>
+  이유: 서버에서 렌더링이 되어서 나오기 때문이다. (HTML형태로 받아온다.)
+- 브라우저에서 제공하는 API을 사용 할 수 없다. (ex: localStroage, Intersection Observer)등
+- 리액트에서 제공하는 useState을 이용한 상태관리를 할 수 없다.
+- node 환경에서 제공하는 API을 사용 할 수 있다. (fs, os 사용 가능)
 
-## Learn More
+## Client Components
 
-To learn more about Next.js, take a look at the following resources:
+- 브라우저에서 제공하는 API을 사용 할 수 있다.
+- 리액트에서 제공하는 useState을 사용해서 상태관리를 할 수 있다.
+- next13 에서는 'use client'; 사용하여 클라이언트 컴포넌트로 전환할 수 있다.
+- 예제: components - Counter.tsx
+- 클라이언트 컴포넌트의 말은 무조건 클라이언트 사이드 렌더링이 된다는 얘기가 아니다.
+- 클라이언트 컴포넌트란: 사용자가 클릭하는 이벤트나, 브라우저에서 사용되어야 하는 코드를 클라이언트에서 처리한다는 개념이다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 동작원리
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+<img src="src/assets/images/스크린샷 2023-05-29 오전 1.57.41.png" />
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+위의 사진은 yarn build 을 하게 나오면 나오는 정보이다. </br>
+○ 정적인 페이지들의 대한 정보이다.</br>
+● dynamic 라우터 페이지를 가르키는데 dynamic/0531 , dynamic/0313 페이지만은 정적으로 미리 만들어서 놓았다는 정보이다. </br>
