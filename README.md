@@ -1,10 +1,27 @@
+## next
+
+1. next팀에서는 server components에서 왠만하면 데이터를 fetching을 선호한다. </br>
+   이유:
+
+   1. backend 리소스에 직접적으로 접근가능하다.
+   2. token, key 같은 보안적인 요소를 클라이언트에 알려주지 않아도 된다.
+   3. 클라이언트에서 데이터를 페칭, 렌더링하는 것을 서버에서도 같은 환경에서 할 수 있다.
+   4. 서버-클라이언트-서버-클라이언트 이런 번거로운 데이터 페칭을 안해도 된다.
+
+2. 중복되는 요청을 해도 next에서 자동응로 하나의 요청으로 만들어 준다.
+   <img src="src/assets/images/스크린샷 2023-06-05 오전 1.18.37.png">
+   - post , patch 등 수정의 api는 제거를 제공하지 않습니다.
+
+---
+
 ## version 12 / version 13 큰 차이점
 
 ### 12 version: 페이지 단위로 렌더링 방식을 규정
 
-### 13 version: react18 버전부터 Server Components을 규정 - 컴포넌트 단위로 렌더링 방식을 규정 할 수 있음 (app 폴더에 모든 컴포넌트는 기본적으로 서버 컴포넌트)
+- getStaticProps.. 등등의 함수의 있는 코드는 server에서 실행된다.
+- 나머지 함수는 클라이언트에서 실행된다.
 
----
+### 13 version: react18 버전부터 Server Components을 규정 - 컴포넌트 단위로 렌더링 방식을 규정 할 수 있음 (app 폴더에 모든 컴포넌트는 기본적으로 서버 컴포넌트)
 
 ## Server-Components인지 Client-Components 확인 할 수 있는 방법 (보류)
 
@@ -69,10 +86,13 @@
 ### SSG
 
 - 렌더링 시기: build 될 때 한번만 실행이 됨 -> 서버 내부에서 데이터 변경되어도 변경이 안됨
+- fetch로 새로운 데이터를 가져오더라도 build 시간에 한번만 가져오기 때문에 SSG는 빌드가 다시 되지 않는 한 새로운 데이터를 가져올 수 없다.
+- cache: 'force-cache' 옵션은 영원히 캐시를 한다는걸 의미 SSG로 동작한다.
 
 ### ISR
 
 - revalidate을 이용하여 ISR 사용 가능하다.
+- fetch 할 때는 option에서 revalidate 옵션을 사용하여 ISR을 사용 할 수 있다.
 
 ```
 const revalidate = 10
@@ -81,3 +101,12 @@ const revalidate = 10
 - 10초마다 데이터 유효성을 다시 설정할 수 있다.
 - 실험방법: yarn build -> yarn start -> data/example/data.json의 데이터를 바꿔본다.
 - production과 똑같은 환경에서 테스트를 하고 싶다면 yarn build -> yarn start을 해줘야 한다.
+
+### SSR
+
+- fetch의 revalidate 의 옵션을 0으로 주게 되면 SSR이 적용 된다.
+- cache: 'no-store' 옵션을 지정해도 SSR처럼 동작을 한다.
+
+### CSR
+
+- client components 에서 fetch 후 state을 이용하여 쓰면 된다.
