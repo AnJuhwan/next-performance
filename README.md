@@ -110,3 +110,90 @@ const revalidate = 10
 ### CSR (Client-side Rendering)
 
 - client components 에서 fetch 후 state을 이용하여 쓰면 된다.
+
+---
+
+## Loading Components
+
+- loading이라는 파일을 만들고 사용하면 된다.
+  <img src="src/assets/images/loading.png">
+  <br />
+
+- loading의 동작방식은 react Suspense을 사용하는것과 같다.
+  <img src="src/assets/images/suspense.png">
+  <br />
+
+---
+
+## Error Components
+
+- Error 사용 폴더방식 - erorr.jsx
+  <img src="src/assets/images/errorFolder.png">
+
+- Error에는 error, reset props을 받도록 되어있다.
+  <img src="src/assets/images/errorCode.png">
+
+- Error의 동작방식은 react ErrorBoundary 사용하는것과 같다.
+  <img src="src/assets/images/error.png">
+
+- 해당 페이지의 Error 파일이 없다면 상위폴더로 올라가서 Error파일을 찾게 된다.
+  <img src="src/assets/images/errorRoute.png">
+
+---
+
+## Images Components
+
+### Next Image 외부이미지 사용
+
+- images의 width , height을 설정해줘야 한다.
+- next.config.js에 이미지 사용에 대한 설정을 해줘야 한다.
+- 사이즈를 미리 지정하기 때문에 Layout shift가 일어나지 않는다.
+
+### Next Image의 장점
+
+- Next Image을 사용하면 next 자체에서 image을 최적화를 해준다. (이미지 크기, 퀄리티)
+- priority을 지정해주면 가장 먼저 해당 이미지를 다운로드 해준다.
+
+---
+
+## Next Font 장점
+
+### @next/font
+
+- next는 자동으로 self-hosting 되도록 만들어져있다.
+- next 내부적으로 CSS - size-adjust 속성이 설정 되어있기 때문에 layout shift가 일어나지 않는다.
+- Google Fonts 을 사용해도 Google Fonts에 요청하는게아닌 Next Server에 저장되어있기 때문에 자체적으로 제공 가능하다.
+- Font는 최상위에서 정의해주는게 좋다.
+
+## <img src="src/assets/images/font.png">
+
+## Redirect
+
+- 특정한 경로로 왔을 때 다른 경로로 설정해주는 것.
+- next.config.js 파일에서 설정으로 redirect 설정해줄 수 있다.
+  <img src="src/assets/images/Redirect.png">
+
+```
+import { redirect } from 'next/navigation'
+
+redirect('경로')
+```
+
+사용이 가능하다.
+
+---
+
+## Rewrite
+
+- 해당 destination의 url로 들어와야 하는 페이지들을
+  source의 url 들어와도 똑같은 페이지를 보여주도록 하는 next.config.js 설정이다
+  <img src="src/assets/images/rewrite.png">
+
+---
+
+## middleware
+
+- 특정 url에서 미들웨어 작동할 수 있다.
+- 로그인의 여부를 판단해서 redirect 시켜줄 수 있다.
+- 등등.. 여러가지 기능이 가능하다.
+  next middleware 공식 홈페이지 : https://nextjs.org/docs/app/building-your-application/routing/middleware
