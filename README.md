@@ -83,13 +83,13 @@
 - 브라우저 API을 이용해야 할 때
 - Hooks을 사용해야 할 때
 
-### SSG
+### SSG (Static Site Generation)
 
 - 렌더링 시기: build 될 때 한번만 실행이 됨 -> 서버 내부에서 데이터 변경되어도 변경이 안됨
 - fetch로 새로운 데이터를 가져오더라도 build 시간에 한번만 가져오기 때문에 SSG는 빌드가 다시 되지 않는 한 새로운 데이터를 가져올 수 없다.
 - cache: 'force-cache' 옵션은 영원히 캐시를 한다는걸 의미 SSG로 동작한다.
 
-### ISR
+### ISR (Incremental Static Regeneration)
 
 - revalidate을 이용하여 ISR 사용 가능하다.
 - fetch 할 때는 option에서 revalidate 옵션을 사용하여 ISR을 사용 할 수 있다.
@@ -102,11 +102,11 @@ const revalidate = 10
 - 실험방법: yarn build -> yarn start -> data/example/data.json의 데이터를 바꿔본다.
 - production과 똑같은 환경에서 테스트를 하고 싶다면 yarn build -> yarn start을 해줘야 한다.
 
-### SSR
+### SSR (Server-Side Rendering)
 
 - fetch의 revalidate 의 옵션을 0으로 주게 되면 SSR이 적용 된다.
 - cache: 'no-store' 옵션을 지정해도 SSR처럼 동작을 한다.
 
-### CSR
+### CSR (Client-side Rendering)
 
 - client components 에서 fetch 후 state을 이용하여 쓰면 된다.
